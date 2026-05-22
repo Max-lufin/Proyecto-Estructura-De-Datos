@@ -1,0 +1,12 @@
+#Archivos compilados y ejecutables
+*.o
+*.out
+*.exe
+buscador
+
+#Archivos de configuración del editor (VS Code)
+.vscode/
+
+#Ignorar el dataset completo si es muy pesado (opcional, pero recomendado)
+*.csv
+!dataset_recortado.csv
