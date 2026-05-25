@@ -3,7 +3,7 @@
 
 import csv
 #Rutas de los archivos
-archivo = "data/dataset_recortadoPrincipal"  
+archivo = "data/dataset_recortadoPrincipal.csv"  
 archivo_usuarios = "data/usuarios.txt"
 archivo_posts = "data/posts.txt"
 archivo_amigos = "data/amigos.txt"
@@ -18,28 +18,44 @@ with open(archivo, 'r') as archivo, \
                                                                     
 
 
-
+   
     lector = csv.reader(archivo, delimiter=',', quotechar='"')  #csv.reader lee fila por fila y las separa 
     next(lector)  #salta la primera fila (encabezados)
+    id_post_global = 1
     for fila in lector: #recorre el archivo agregando a los archivos correspondientes 
        
        id_usuario = fila[0]
        nombre_usuario = fila[1]
        posts =  fila[2]
        amigos = fila[9]
+       posts_sucios = fila[2]  #limpieza de caracteres no deseados en los posts
+       posts_limpios = posts_sucios.replace('[', '').replace(']', '').replace('"', '').strip()  #limpia los posts quitando los caracteres no deseados
+    
+
+       amigos_sucios = ",".join(fila[9:])  #limpieza de caracteres no deseados en los amigos
+       amigos_limpios = amigos_sucios.replace('[', '').replace(']', '').replace('"', '').replace(' ', '')
+
+       lista_amigos = amigos_limpios.split(',')  #separa los amigos en una lista
+
+       for amigo in lista_amigos: #ciclo para guardar el usuario y el amigo que tenga
+           if amigo != "":
+               salida_amigos.write(f"{id_usuario};{amigo}\n")
+            
+
+
+             
        salida_usuarios.write(f"{id_usuario};{nombre_usuario}\n")  #escribe el id y el nombre del usuario en el archivo de usuarios
-       salida_posts.write(f"{contador}{id_usuario};{posts_limpios}\n")
-       salida_likes.write(f"{amigos}\n")
 
-     
-    
+       salida_posts.write(f"{id_post_global};{id_usuario};{posts_limpios}\n")
 
-    posts_sucios = fila[2]  #limpieza de caracteres no deseados en los posts
-    posts_limpios = posts_sucios.replace('[', '').replace(']', '').replace('"', '').strip()  #limpia los posts quitando los caracteres no deseados
-    
+       if len(lista_amigos) > 0 and lista_amigos[0] != "":
+           primer_amigo = lista_amigos[0]  #toma el primer amigo de la lista para asignar el like
+           salida_likes.write(f"{id_post_global};{primer_amigo}\n")
 
-    amigos_sucios = ",".join(fila[9:])  #limpieza de caracteres no deseados en los amigos
-    amigos_limpios = amigos_sucios.replace('[', '').replace(']', '').replace('"', '').replace(' ', '')
+       id_post_global += 1
+
+print("Archivos separados correctamente")
+
 
 #Arreglar el tema de los ID y el contador
 #Separar los 4 archivos
