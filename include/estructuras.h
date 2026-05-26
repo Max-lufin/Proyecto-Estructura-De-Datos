@@ -3,7 +3,7 @@
 
 
 typedef struct NodoAmigo {
-    int id_amigo;
+    long long int id_amigo;
     struct NodoAmigo *siguiente;
 } Amigo;
 typedef struct NodoLike{
@@ -35,6 +35,7 @@ typedef struct NodoUsuario{
     
 } Usuario;
 //este es el indice invertido
+//P.D. con "hashtag", nos referimos a una palabra
 typedef struct NodoVocabulario{
     char hashtag[1000];
 

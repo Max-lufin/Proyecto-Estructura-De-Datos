@@ -1,12 +1,13 @@
-#Archivos compilados y ejecutables
-*.o
-*.out
-*.exe
+# Archivos ejecutables
+main
 buscador
+*.exe
+*.o
+*.a
 
-#Archivos de configuración del editor (VS Code)
+# Carpetas de VS Code
 .vscode/
 
-#Ignorar el dataset completo si es muy pesado (opcional, pero recomendado)
-*.csv
-!dataset_recortado.csv
+# Archivos temporales del sistema y editores
+*.swp
+.DS_Store
